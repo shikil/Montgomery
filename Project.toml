@@ -1,0 +1,8 @@
+name = "Montgomery"
+uuid = "f9143b87-9df3-4f3b-973f-ee1ade4b2934"
+authors = ["Stephen Loo <467116+shikil@users.noreply.github.com>"]
+version = "0.1.0"
+
+[deps]
+Hecke = "3e1990a7-5d81-5526-99ce-9ba3ff248f21"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
