@@ -1,4 +1,5 @@
 module Montgomery
+import Base.:*
 import Hecke: FieldElem, EllipticCurve, EllCrv, EllCrvPt, parent, root
 export MontgomeryCurve
 
