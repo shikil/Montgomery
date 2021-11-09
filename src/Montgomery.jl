@@ -1,12 +1,23 @@
 module Montgomery
-import Base.:*
-import Hecke: FieldElem, EllipticCurve, EllCrv, EllCrvPt, parent, root
-export MontgomeryCurve
 
-Base.:*(P::EllCrvPt, n::Int64) = n * P
+import Base.:*
+import Hecke: FieldElem, EllipticCurve, EllCrv, EllCrvPt, ResidueRing, ZZ, j_invariant, parent, root
+import Nemo: FlintFiniteField
+export FiniteField, MontgomeryCurve, j_invariant
+
+Base.:*(P::EllCrvPt, n::Int) = n * P
 
 function (E::EllCrv{T})(a::T) where T
 	E([a, root(a^3 + E.coeff[2] * a^2 + E.coeff[4] * a + E.coeff[5], 2)])
+end
+
+function (E::EllCrv{T})(x::T, y::T) where T
+	E([x, y])
+end
+
+function FiniteField(p; gen="i")
+	_, t = ResidueRing(ZZ, p)["t"]
+	FlintFiniteField(t^2+1, gen)
 end
 
 function MontgomeryCurve(a::T) where T<:FieldElem
