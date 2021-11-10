@@ -1,9 +1,9 @@
 module Montgomery
 
-import Hecke: EllipticCurve, EllCrv, EllCrvPt, ResidueRing, ZZ, ison_curve, j_invariant, order, parent, roots
+import Hecke: EllipticCurve, EllCrv, EllCrvPt, ResidueRing, ZZ, base_field, characteristic, ison_curve, j_invariant, order, parent, roots
 import Nemo: FlintFiniteField
 
-export FiniteField, MontgomeryCurve, isogeny, issuper_singular, j_invariant
+export FiniteField, MontgomeryCurve, isogeny2, isogeny3, issuper_singular, j_invariant, order
 
 Base.:*(p::EllCrvPt, n::Int) = n * p
 
@@ -30,9 +30,14 @@ function MontgomeryCurve(a)
     EllipticCurve([aid, a, aid, one(a), aid])
 end
 
-function isogeny(p::EllCrvPt)
+function isogeny2(p::EllCrvPt)
     a = 2 * (1 - 2p.coordx^2)
     MontgomeryCurve(a), x -> x * (p.coordx * x - 1) // (x - p.coordx)
+end
+
+function isogeny3(p::EllCrvPt)
+    a = (parent(p).coeff[2] * p.coordx - 6p.coordx^2 + 6) * p.coordx
+    MontgomeryCurve(a), x -> x * (p.coordx * x - 1)^2 // (x - p.coordx)^2
 end
 
 function issuper_singular(e::EllCrv)
