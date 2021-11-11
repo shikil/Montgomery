@@ -43,7 +43,7 @@ end
 function issuper_singular(e::EllCrv)
     c = characteristic(base_field(e))
     c == 0 && error("Characteristic must be nonzero")
-    order(e) % c == 0
+    (order(e) - 1) % c == 0
 end
 
 end # module

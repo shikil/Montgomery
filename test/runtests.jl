@@ -11,7 +11,7 @@ using Montgomery
     Qb = Ea0(20i + 185, 281i + 239)
     @test 2Pa == Pa * 2
     @test (100i + 248, 304i + 199) in Ea0
-    #@test issuper_singular(Ea0)
+    @test issuper_singular(Ea0)
 
     # Alice's public key generation
     ka = 11
