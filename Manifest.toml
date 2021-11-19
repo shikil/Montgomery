@@ -69,9 +69,9 @@ version = "0.4.0"
 
 [[Hecke]]
 deps = ["AbstractAlgebra", "Dates", "Distributed", "InteractiveUtils", "Libdl", "LinearAlgebra", "Markdown", "Nemo", "Pkg", "Printf", "Profile", "Random", "RandomExtensions", "Requires", "Serialization", "SparseArrays", "Test"]
-git-tree-sha1 = "785a221b79657af309c051180f8a44b12a30cd47"
+git-tree-sha1 = "a21e2e826175a4d28084af08dec6065859d02075"
 uuid = "3e1990a7-5d81-5526-99ce-9ba3ff248f21"
-version = "0.10.23"
+version = "0.10.24"
 
 [[InteractiveUtils]]
 deps = ["Markdown"]
