@@ -1,5 +1,6 @@
 module Montgomery
 
+import AbstractAlgebra: FinFieldElem
 import Hecke: EllipticCurve, EllCrv, EllCrvPt, ResidueRing, ZZ, base_field, characteristic, ison_curve, j_invariant, order, parent, roots
 import Nemo: FlintFiniteField
 
@@ -40,10 +41,8 @@ function isogeny3(p::EllCrvPt)
     MontgomeryCurve(a), x -> x * (p.coordx * x - 1)^2 // (x - p.coordx)^2
 end
 
-function issuper_singular(e::EllCrv)
-    c = characteristic(base_field(e))
-    c == 0 && error("Characteristic must be nonzero")
-    (order(e) - 1) % c == 0
+function issuper_singular(e::EllCrv{T}) where T <: FinFieldElem
+    order(e) % characteristic(base_field(e)) == 1
 end
 
 end # module
