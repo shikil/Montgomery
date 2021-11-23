@@ -4,7 +4,7 @@ import AbstractAlgebra: FinFieldElem
 import Hecke: EllipticCurve, EllCrv, EllCrvPt, ResidueRing, ZZ, base_field, characteristic, ison_curve, j_invariant, order, parent, roots
 import Nemo: FlintFiniteField
 
-export FiniteField, MontgomeryCurve, isogeny2, isogeny3, issuper_singular, j_invariant, order
+export FiniteImaginaryQuadraticField, MontgomeryCurve, isogeny2, isogeny3, issuper_singular, j_invariant, order
 
 Base.:*(p::EllCrvPt, n::Int) = n * p
 
@@ -21,7 +21,7 @@ function (e::EllCrv{T})(x::T, y::T) where T
     e([x, y])
 end
 
-function FiniteField(p; gen="i")
+function FiniteImaginaryQuadraticField(p; gen="i")
     _, t = ResidueRing(ZZ, p)["t"]
     FlintFiniteField(t^2 + 1, gen)
 end

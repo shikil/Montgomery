@@ -3,7 +3,7 @@ using Montgomery
 
 @testset "SIKE for beginners" begin
     # Public parameters
-    k, i = FiniteField(431)
+    k, i = FiniteImaginaryQuadraticField(431)
     Ea0 = MontgomeryCurve(329i + 423)
     Pa = Ea0(100i + 248, 304i + 199)
     Qa = Ea0(426i + 394, 51i + 79)
