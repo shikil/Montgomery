@@ -26,10 +26,7 @@ function FiniteImaginaryQuadraticField(p; gen="i")
     FlintFiniteField(t^2 + 1, gen)
 end
 
-function MontgomeryCurve(a)
-    aid = zero(a)
-    EllipticCurve([aid, a, aid, one(a), aid])
-end
+MontgomeryCurve(a) = EllipticCurve(parent(a).([0, a, 0, 1, 0]))
 
 function isogeny2(p::EllCrvPt)
     a = 2 * (1 - 2p.coordx^2)
