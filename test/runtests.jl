@@ -21,12 +21,13 @@ using Montgomery
     PKa = ()
     for (index, value) in enumerate(3:-1:0)
         Ra = 2^value * Sa
-        Ea, ϕ = isogeny2(Ra)
+        I = Isogeny(Ra, 2)
+        Ea = codomain(I)
         @test j_invariant(Ea) == jvalue[index]
-        Pb = Ea(ϕ(Pb.coordx))
-        Qb = Ea(ϕ(Qb.coordx))
+        Pb = I(Pb)
+        Qb = I(Qb)
         if value > 0
-            Sa = Ea(ϕ(Sa.coordx))
+            Sa = I(Sa)
             @test order(Sa) == 2^value
         else
             PKa = (Ea, Pb, Qb)
@@ -44,12 +45,13 @@ using Montgomery
     PKb = ()
     for (index, value) in enumerate(2:-1:0)
         Rb = 3^value * Sb
-        Ea, ϕ = isogeny3(Rb)
+        I = Isogeny(Rb, 3)
+        Ea = codomain(I)
         @test j_invariant(Ea) == jvalue[index]
-        Pa = Ea(ϕ(Pa.coordx))
-        Qa = Ea(ϕ(Qa.coordx))
+        Pa = I(Pa)
+        Qa = I(Qa)
         if value > 0
-            Sb = Ea(ϕ(Sb.coordx))
+            Sb = I(Sb)
             @test order(Sb) == 3^value
         else
             PKb = (Ea, Pa, Qa)
@@ -68,10 +70,11 @@ using Montgomery
     E1 = Ea0
     for (index, value) in enumerate(3:-1:0)
         Ra = 2^value * Sa
-        Ea, ϕ = isogeny2(Ra)
+        I = Isogeny(Ra, 2)
+        Ea = codomain(I)
         @test j_invariant(Ea) == jvalue[index]
         if value > 0
-            Sa = Ea(ϕ(Sa.coordx))
+            Sa = I(Sa)
         else
             E1 = Ea
         end
@@ -87,10 +90,11 @@ using Montgomery
     E2 = Ea0
     for (index, value) in enumerate(2:-1:0)
         Rb = 3^value * Sb
-        Ea, ϕ = isogeny3(Rb)
+        I = Isogeny(Rb, 3)
+        Ea = codomain(I)
         @test j_invariant(Ea) == jvalue[index]
         if value > 0 
-            Sb = Ea(ϕ(Sb.coordx))
+            Sb = I(Sb)
         else
             E2 = Ea
         end
