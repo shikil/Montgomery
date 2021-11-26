@@ -1,12 +1,16 @@
 module Montgomery
 
-import AbstractAlgebra: FinFieldElem
+import AbstractAlgebra: FinFieldElem, elem_type
 import Hecke: EllipticCurve, EllCrv, EllCrvPt, ResidueRing, ZZ, base_field, characteristic, ison_curve, j_invariant, order, parent, roots
 import Nemo: FlintFiniteField
 
-export FiniteImaginaryQuadraticField, MontgomeryCurve, isogeny2, isogeny3, issuper_singular, j_invariant, order
+export FiniteImaginaryQuadraticField, MontgomeryCurve, isisogenous, isogeny2, isogeny3, issuper_singular, j_invariant, order
+
+elem_type(::Type{EllCrv{T}}) where T = EllCrvPt{T}
 
 Base.:*(p::EllCrvPt, n::Int) = n * p
+
+Φ(x,y) = -x^2 * y^2 + x^3 + 1488x^2 * y + 1488x * y^2 + y^3 - 162000x^2 + 40773375x * y - 162000y^2 + 8748000000x + 8748000000y - 157464000000000
 
 function Base.in(coords::Tuple{T,T}, e::EllCrv{T}) where T
     ison_curve(e, [coords[1], coords[2]])
@@ -27,6 +31,10 @@ function FiniteImaginaryQuadraticField(p; gen="i")
 end
 
 MontgomeryCurve(a) = EllipticCurve(parent(a).([0, a, 0, 1, 0]))
+
+function isisogenous(e1::EllCrv{T}, e2::EllCrv{T}) where T <: FinFieldElem
+    j_invariant(e1) == j_invariant(e2)
+end
 
 function isogeny2(p::EllCrvPt)
     a = 2 * (1 - 2p.coordx^2)

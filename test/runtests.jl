@@ -65,12 +65,15 @@ using Montgomery
     Sa = Pa + ka * Qa
     @test Sa.coordx == 125i + 357
     jvalue = (364i + 304, 67, 242, 234)
+    E1 = Ea0
     for (index, value) in enumerate(3:-1:0)
         Ra = 2^value * Sa
         Ea, ϕ = isogeny2(Ra)
         @test j_invariant(Ea) == jvalue[index]
         if value > 0
             Sa = Ea(ϕ(Sa.coordx))
+        else
+            E1 = Ea
         end
     end
 
@@ -81,12 +84,17 @@ using Montgomery
     Sb = Pb + kb * Qb
     @test Sb.coordx == 393i + 124
     jvalue = (299i + 315, 61, 234)
+    E2 = Ea0
     for (index, value) in enumerate(2:-1:0)
         Rb = 3^value * Sb
         Ea, ϕ = isogeny3(Rb)
         @test j_invariant(Ea) == jvalue[index]
         if value > 0 
             Sb = Ea(ϕ(Sb.coordx))
+        else
+            E2 = Ea
         end
     end
+
+    @test isisogenous(E1, E2)
 end
