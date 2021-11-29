@@ -4,7 +4,7 @@ import AbstractAlgebra: FinFieldElem, Map, SetMap, codomain, elem_type
 import Hecke: EllipticCurve, EllCrv, EllCrvPt, ResidueRing, ZZ, base_field, characteristic, ison_curve, j_invariant, order, parent, roots
 import Nemo: FlintFiniteField
 
-export FiniteImaginaryQuadraticField, Isogeny, MontgomeryCurve, codomain, isisogenous, issuper_singular, j_invariant, order
+export FiniteImaginaryQuadraticField, Isogeny, MontgomeryCurve, codomain, degree, isisogenous, issuper_singular, j_invariant, order
 
 struct Isogeny <: Map{EllCrv, EllCrv, SetMap, Isogeny}
     domain::EllCrv
@@ -14,7 +14,7 @@ struct Isogeny <: Map{EllCrv, EllCrv, SetMap, Isogeny}
 
     function Isogeny(p::EllCrvPt{T}, degree::Int) where T <: FinFieldElem
         if degree == 2
-            codomain = MontgomeryCurve(2 * (1 - 2p.coordx^2))
+            codomain = MontgomeryCurve(2(1 - 2p.coordx^2))
             ϕ = x -> x * (p.coordx * x - 1) // (x - p.coordx)
         elseif degree == 3
             codomain = MontgomeryCurve((parent(p).coeff[2] * p.coordx - 6p.coordx^2 + 6) * p.coordx)
@@ -26,6 +26,7 @@ end
 
 (i::Isogeny)(x::Int) = i._ϕ(x)
 (i::Isogeny)(e::EllCrvPt{T}) where T <: FinFieldElem = codomain(i)(i._ϕ(e.coordx))
+degree(f::Isogeny) = getfield(f, :degree)
 
 Base.:*(p::EllCrvPt, n::Int) = n * p
 Base.in(coords::Tuple{T,T}, e::EllCrv{T}) where T = ison_curve(e, [coords[1], coords[2]])

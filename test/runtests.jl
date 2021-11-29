@@ -72,6 +72,7 @@ using Montgomery
         Ra = 2^value * Sa
         I = Isogeny(Ra, 2)
         Ea = codomain(I)
+        @test degree(I) == 2
         @test j_invariant(Ea) == jvalue[index]
         if value > 0
             Sa = I(Sa)
@@ -92,6 +93,7 @@ using Montgomery
         Rb = 3^value * Sb
         I = Isogeny(Rb, 3)
         Ea = codomain(I)
+        @test degree(I) == 3
         @test j_invariant(Ea) == jvalue[index]
         if value > 0 
             Sb = I(Sb)
